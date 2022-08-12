@@ -1,20 +1,25 @@
 package com.bcm.amusic.domain
 
-enum Interval:
-  case Unison        extends Interval
-  case MinorSecond   extends Interval
-  case MajorSecond   extends Interval
-  case MinorThird    extends Interval
-  case MajorThird    extends Interval
-  case PerfectFourth extends Interval
-  case TriTone       extends Interval
-  case PerfectFifth  extends Interval
-  case MinorSixth    extends Interval
-  case MajorSixth    extends Interval
-  case MinorSeventh  extends Interval
-  case MajorSeventh  extends Interval
+import enumeratum._
 
-object Interval {
+sealed trait Interval extends EnumEntry
+
+object Interval extends Enum[Interval] {
+  val values = findValues
+
+  case object Unison        extends Interval
+  case object MinorSecond   extends Interval
+  case object MajorSecond   extends Interval
+  case object MinorThird    extends Interval
+  case object MajorThird    extends Interval
+  case object PerfectFourth extends Interval
+  case object TriTone       extends Interval
+  case object PerfectFifth  extends Interval
+  case object MinorSixth    extends Interval
+  case object MajorSixth    extends Interval
+  case object MinorSeventh  extends Interval
+  case object MajorSeventh  extends Interval
+
   val majorScale: List[Interval] =
     List(
       Unison,

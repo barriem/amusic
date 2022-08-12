@@ -1,6 +1,6 @@
-import Dependencies.*
+import Dependencies._
 
-val scala3Version = "3.1.3"
+val scala2Version = "2.13.8"
 
 lazy val root = project
   .in(file("."))
@@ -8,9 +8,11 @@ lazy val root = project
     organization := "com.bcm",
     name         := "amusic",
     version      := "0.1.0-SNAPSHOT",
-    scalaVersion := scala3Version,
+    scalaVersion := scala2Version,
     libraryDependencies ++= Seq(
       catsEffect,
+      declineEffect,
+      enumeratum,
       mUnit
     )
   )
