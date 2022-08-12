@@ -1,6 +1,6 @@
 package com.bcm.amusic.service
 
-import com.bcm.amusic.domain.{Degree, Interval, Note, Scale, ScaleDegree}
+import com.bcm.amusic.domain.{Degree, Interval, Note, Scale, ScaleDegree, ScaleType}
 import cats.syntax.applicative._
 import cats.syntax.functor._
 import cats.syntax.flatMap._
@@ -9,6 +9,7 @@ import cats.Monad
 class ScaleService[F[_]: Monad] {
   def buildScaleFromIntervals(
       rootNote: Note,
+      scaleType: ScaleType,
       intervals: List[Interval]
   ): F[Scale] = for {
     notes              <- Note.fromRoot(rootNote).pure[F]
@@ -21,11 +22,11 @@ class ScaleService[F[_]: Monad] {
       .zip(ScaleDegree.values)
       .map { case ((note, interval), degree) => Degree(degree, note, interval) }
       .pure[F]
-  } yield Scale(degrees)
+  } yield Scale(degrees, rootNote, scaleType)
 
   def buildMajorScale(rootNote: Note): F[Scale] =
-    buildScaleFromIntervals(rootNote, Interval.majorScale)
+    buildScaleFromIntervals(rootNote, ScaleType.Major, Interval.majorScale)
 
   def buildMinorScale(rootNote: Note): F[Scale] =
-    buildScaleFromIntervals(rootNote, Interval.minorScale)
+    buildScaleFromIntervals(rootNote, ScaleType.Minor, Interval.minorScale)
 }

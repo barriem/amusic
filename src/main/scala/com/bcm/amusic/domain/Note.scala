@@ -2,7 +2,9 @@ package com.bcm.amusic.domain
 
 import enumeratum._
 
-sealed trait Note extends EnumEntry
+sealed trait Note extends EnumEntry {
+  def render: String = super.entryName.replace("Sharp", "#")
+}
 
 object Note extends Enum[Note] {
   val values = findValues

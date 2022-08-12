@@ -5,12 +5,15 @@ import cats.syntax.applicative._
 import com.bcm.amusic.domain.Scale
 
 class RenderService[F[_]: Applicative] {
+  def renderScale(scale: Scale): F[String] = {
+    val header = s"[${scale.rootNote.render} ${scale.scaleType} scale degrees]"
 
-  def renderScale(scale: Scale): F[String] =
-    scale.degrees
+    val degreeString = scale.degrees
       .map { degree =>
-        s"${degree.degree.toString}\t : ${degree.note.toString.replace("Sharp", "#")}"
+        s"  ${degree.degree}\t: ${degree.note.render}"
       }
       .mkString("\n")
-      .pure[F]
+
+    s"$header \n$degreeString".pure[F]
+  }
 }
